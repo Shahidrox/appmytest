@@ -1,0 +1,44 @@
+<%= render :partial =>  "layouts/slider" %>
+    <div class="row">
+      <%= render :partial =>  "layouts/side_bar" %>
+<div class="col-lg-9 col-md-9 col-sm-12">
+  <div class="col-lg-12 col-sm-12">
+    <span class="title">Sign up</span>
+  </div>
+  <div class="col-lg-12 col-sm-12">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
+    <table class="table table-bordered tbl-checkout" style="width:50%">
+      <tbody>
+        <tr>
+          <td><%= f.label :email %></td>
+          <td>
+            <%= f.email_field :email, autofocus: true, :class=>"form-control" %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :password %>
+    <% if @validatable %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %></td>
+          <td>
+            <%= f.password_field :password, autocomplete: "off", :class=>"form-control" %>
+          </td>
+        </tr>
+        <tr>
+            <td><%= f.label :password_confirmation %> </td>
+          <td><%= f.password_field :password_confirmation, autocomplete: "off", :class=>"form-control" %></td>
+          
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= f.submit "Sign up", :class=>"btn btn-primary", :style=>"float:right" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
+</div>

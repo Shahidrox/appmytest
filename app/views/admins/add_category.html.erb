@@ -1,0 +1,96 @@
+<div class="clearfix visible-sm"></div>
+<div class="col-lg-9 col-md-9 col-sm-12">
+	<div class="col-lg-12 col-sm-12">
+		<span class="title">
+			Add Category
+			<button type="button" style="float:right" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Category</button>
+		</span>
+	</div>
+	<div class="col-lg-12 col-sm-12 hero-feature">
+		<table class="table table-bordered">
+			<tr>
+				<th>Product Nname</th>
+				<th>Category</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+			</tr>
+			<% @category.each do |category| %>
+			<tr>
+              <td><%= category.product.product_name %></td>
+              <td><%= category.category_type %></td>
+              <td><%= category.category_name %></td>
+              <td><%= category.description %></td>
+              <td><%= category.price %></td>            
+            </tr>
+            <%end%>
+		</table>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Category</h4>
+      </div>
+      <div class="modal-body">
+      	<%  @product=Product.all  %>
+        <%#= form_tag('/posts', :multipart => true) do %>
+        <%= form_tag({:action => 'save_category'}, {:multipart => true} ) do -%>
+ 		<table class="table table-bordered tbl-checkout">
+          <tbody>
+            <tr>
+              <td>Product Name</td>
+              <td>
+              	<select id="category_product_id" name="category[product_id]" class="form-control" autofocus>
+  				  <% @product.each do |product| %>
+                    <option value="<%= product.id%>"><%= product.product_name%></option>
+                  <%end%>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Category Type</td>
+              <td>
+              	<input id="category_category_type" name="category[category_type]" placeholder="exp: Men mobile or watch etc" type="text" value="" class="form-control" required>
+              </td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td>
+              	<input id="category_category_name" name="category[category_name]" placeholder="Name" type="text" value="" class="form-control" required>
+              </td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td>
+              	<input id="category_description" name="category[description]" placeholder="Category Description" type="text" value="" class="form-control" required>
+              </td>
+            </tr>
+            <tr>
+              <td>Price</td>
+              <td>
+              	<input id="category_price" name="category[price]" placeholder="Price" type="text" value="" class="form-control" required>
+              </td>
+            </tr>
+            <tr>
+              <td>Image</td>
+              <td><input id="image_product_image" name="image[product_image]" type="file"></td>
+            </tr>
+            <tr>
+              <th colspan="2"><%= submit_tag 'Save', :class=>"btn btn-primary btn-sm" %></th>
+            </tr>
+          </tbody>
+        </table>
+        <%end%>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

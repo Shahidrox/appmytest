@@ -1,0 +1,143 @@
+<header>
+	    <div class="container">
+	        <div class="row">
+
+	        	<!-- Logo -->
+	            <div class="col-lg-4 col-md-3 hidden-sm hidden-xs">
+	            	<div class="well logo">
+	            		<a href="/home">
+	            			Test <span>Online Shop</span>
+	            		</a>
+	            		<div>Lorem ipsum dolor sit amet.</div>
+	            	</div>
+	            </div>
+	            <!-- End Logo -->
+
+				<!-- Search Form -->
+	            <div class="col-lg-5 col-md-5 col-sm-7 col-xs-12">
+	            	<div class="well">
+	                    <form action="">
+	                        <div class="input-group">
+	                            <input type="text" class="form-control input-search" placeholder="Enter something to search"/>
+	                            <span class="input-group-btn">
+	                                <button class="btn btn-default no-border-left" type="submit"><i class="fa fa-search"></i></button>
+	                            </span>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	            <!-- End Search Form -->
+
+	            <!-- Shopping Cart List -->
+	            <div class="col-lg-3 col-md-4 col-sm-5">
+	                <div class="well">
+	                	<% if user_signed_in? %>
+							    Signed in as <%= current_user.email %>. Not you?
+							    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+							  <% else %>
+							  <div class="btn-group">
+							  	<a href="/users/sign_up" class="btn btn-default"><i class="fa fa-users"></i> Sign up</a>
+							  	<a href="/users/sign_in" class="btn btn-primary"><i class="fa fa-unlock-alt"></i> Sign in</a>
+							  </div>
+							  <% end %>
+	                    <div class="btn-group btn-group-cart">
+	                        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+	                            <span class="pull-left"><i class="fa fa-shopping-cart icon-cart"></i></span>
+	                            <span class="pull-left">Shopping Cart: 2 item(s)</span>
+	                            <span class="pull-right"><i class="fa fa-caret-down"></i></span>
+	                        </button>
+	                        <ul class="dropdown-menu cart-content" role="menu">
+                                <li>
+                                    <a href="#">
+                                        <b>Penn State College T-Shirt</b>
+                                        <span>x1 $528.96</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <b>Live Nation ACDC Gray T-Shirt</b>
+                                        <span>x1 $428.96</span>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#">Total: $957.92</a></li>
+                            </ul>-->
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- End Shopping Cart List -->
+	        </div>
+	    </div>
+    </header>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- text logo on mobile view -->
+                <a class="navbar-brand visible-xs" href="#">Test Online Shop</a>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/home" <%if params[:action]=='index'%>class="active"<%end%>>Home</a></li>
+                      <% if  current_user && current_user.admin? %>
+                    	<li><a href="/admins" >Dashboard</a></li>
+                      <% end %>
+                    <li><a href="/cart" <%if params[:action]=='cart'%>class="active"<%end%>>Shopping Cart</a></li>
+                    <li><a href="/checkout" <%if params[:action]=='checkout'%>class="active"<%end%>>Checkout</a></li>
+                    <li class="nav-dropdown">
+                    	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							About Shahid <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="http://myrailsdemo.blogspot.in" target="_blank">Blog</a></li>
+							<li><a href="http://shahid-resume.herokuapp.com" target="_blank">Resume</a></li>
+						</ul>
+                    </li>
+                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#SendModal" >Send FeedBack</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navigation -->
+    <!-- Modal -->
+<div class="modal fade" id="SendModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send FeedBack</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered tbl-checkout">
+						<tbody>                            
+                            <tr>
+                                <td>Comment</td>
+                                <td colspan="3">
+                                    <textarea name="" class="form-control comm"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+					</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="drop_mail">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$("#drop_mail").click(function(){
+	 if ($(".comm").val()){
+        $.ajax({ type: 'POST',url: '/send_mail',data: ({'comment': $(".comm").val()}),success: function (data) {alert(data.status);location.reload();}
+                });
+    }else{
+        alert("Please Enter Comment")
+    }
+});
+</script>

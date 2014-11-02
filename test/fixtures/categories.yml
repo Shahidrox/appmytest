@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  product: 
+  category_type: MyString
+  category_name: MyString
+  description: MyString
+  price: 1
+
+two:
+  product: 
+  category_type: MyString
+  category_name: MyString
+  description: MyString
+  price: 1
